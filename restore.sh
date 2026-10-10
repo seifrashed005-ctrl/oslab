@@ -61,6 +61,12 @@ while true; do
     case "$choice" in
         1)
             if mv "$file" "$dir/$name"; then
+                safe_path=$(realpath "$dir/$name")
+
+                if ! grep -Fxq -- "$safe_path" whitelist.txt 2>/dev/null; then
+                    echo "$safe_path" >> whitelist.txt
+                fi
+
                 echo "Restored $name to $dir."
             fi
             ;;

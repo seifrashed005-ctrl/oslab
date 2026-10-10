@@ -24,6 +24,11 @@ mkdir -p "$malicious_dir" || exit 1
 scan_files() {
     for file in "$dir"/*; do
         [ -f "$file" ] || continue
+        file_path=$(realpath "$file")
+
+        if grep -Fxq -- "$file_path" whitelist.txt 2>/dev/null; then
+            continue
+        fi
 
         malicious=false
 
