@@ -1,8 +1,14 @@
 DIR = test_files
 MALICIOUS_DIR = quarantine
 INTERVAL = 5
-run:
+
+run: create
 	bash antivirusd.sh "$(DIR)" "$(MALICIOUS_DIR)" "$(INTERVAL)"
-restore:
+
+restore: create
 	bash restore.sh "$(DIR)" "$(MALICIOUS_DIR)"
-.PHONY: run restore
+
+create:
+	mkdir -p "$(MALICIOUS_DIR)"
+
+.PHONY: run restore create
